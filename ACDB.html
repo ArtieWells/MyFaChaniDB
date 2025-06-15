@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Anime Characters</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* Controls Section */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #2980b9, #1c6ea4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(45deg, #229954, #1e8449);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        /* Search Box */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            min-width: 200px;
+        }
+        @media (min-width: 768px) {
+            .search-container {
+                margin-left: auto;
+                margin-right: 0;
+            }
+        }
+
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .search-results-info {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #3498db;
+            border-top: none;
+            border-radius: 0 0 15px 15px;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: none;
+        }
+
+        .search-results-info.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        /* Tab Buttons Group */
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+        .tab-buttons .btn {
+            padding: 10px 18px;
+            font-size: 15px;
+            background: linear-gradient(45deg, #5DADE2, #3498DB);
+            color: white; /* Ensure readability */
+        }
+        .tab-buttons .btn:hover {
+            background: linear-gradient(45deg, #3498DB, #2874A6);
+        }
+        .tab-buttons .btn.active {
+            background: linear-gradient(45deg, #2874A6, #1F618D);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+
+
+        /* Character Grid */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .character-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: grab;
+            user-select: none;
+            position: relative;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: #3498db;
+        }
+
+        .character-card.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg) scale(1.05);
+            cursor: grabbing;
+            z-index: 1000;
+            position: relative;
+        }
+
+        .character-card.drag-over {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .character-rank {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+            z-index: 1;
+        }
+
+        /* BADGE STYLES */
+        .character-mbti-badge {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            padding: 5px 8px;
+            border-radius: 8px;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1;
+        }
+        
+        .character-zodiac-badge {
+            background: linear-gradient(45deg, #e74c3c, #c0392b); /* Default for non-inferred */
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            padding: 5px 8px;
+            border-radius: 8px;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            z-index: 1;
+        }
+
+        /* Styling for INFERRED zodiac badge on character card */
+        .character-zodiac-badge.inferred-card-badge { /* New class for inferred badges on cards */
+            background: #BB0000; /* Solid darker red */
+            color: white; /* Ensure text is white for contrast */
+            /* Existing font-weight and font-size from .character-zodiac-badge apply */
+            /* No tooltip on card badges */
+        }
+
+
+        .character-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .character-series {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .character-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-1px);
+        }
+
+        .btn-edit {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            transform: translateY(-1px);
+        }
+
+        /* Add Form */
+        .add-form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .add-form.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* Styles for checkbox specifically */
+        .form-group.checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group.checkbox-group label {
+            margin-bottom: 0;
+            margin-right: 10px;
+            line-height: 1.2;
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            background-color: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23bdc3c7%22%20d%3D%22M287%2C197.3L159.9%2C69.8c-3-3-7.7-3-10.7%2C0L5.3%2C197.3c-3%2C3-3%2C7.7%2C0%2C10.7s7.7%2C3%2C10.7%2C0l137.2-137.7l137.2%2C137.7c3%2C3%2C7.7%2C3%2C10.7%2C0S290%2C200.3%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+        }
+
+        /* Style for actual checkbox */
+        .form-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 0;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            vertical-align: middle;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .form-group input[type="checkbox"]:checked {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+
+        .form-group input[type="checkbox"]:checked::before {
+            content: '\2713';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+        }
+
+
+        .form-group input[type="text"]:focus,
+        .form-group select:focus {
+            border-color: #3498db;
+        }
+        .form-group select option[value=""] {
+            color: #7f8c8d;
+        }
+
+
+        /* Stats Section */
+        .stats {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .stats h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* Last Updated */
+        .last-updated {
+            text-align: center;
+            color: #95a5a6;
+            font-style: italic;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        /* New Tab Content Styles */
+        .tab-content {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            /* Default background, overridden by themes */
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Universal Header Styles within Tab Content for a subtle container look and centering */
+        .tab-content h3 {
+            text-align: center; /* Centers the text within the header block */
+            padding: 15px 25px; /* Generous padding around the text */
+            margin-bottom: 25px; /* Space below the header, separating it from the groups */
+            border-radius: 12px; /* Gentle rounding for the container, matching group boxes */
+            display: block; /* Ensures it acts as a block element */
+            width: fit-content; /* Makes the background box only as wide as its content plus padding */
+            margin-left: auto; /* Centers the header block itself */
+            margin-right: auto; /* Centers the header block itself */
+            font-size: 1.8em; /* Slightly larger font for prominence */
+            font-weight: 700; /* Ensure it's clearly bold */
+        }
+
+        /* Tab Specific Theming - UPDATED */
+        .tab-content.zodiac-theme {
+            /* Updated gradient for softer purple */
+            background: linear-gradient(135deg, #712d8d 0%, #9b59b6 100%);
+            color: white; /* Base text color (overridden for specific elements) */
+        }
+        .tab-content.zodiac-theme h3 {
+            background: rgba(255, 255, 255, 0.15); /* A very subtle, translucent white background on purple */
+            color: white; /* Keep white text for strong visual effect on purple */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Enhanced shadow for pop */
+        }
+        .tab-content.zodiac-theme .tab-group {
+            /* More solid and distinct background for groups */
+            background: #FFFFFF; /* Pure white for strong contrast */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px; /* Consistent rounding */
+            padding: 15px 20px; /* Increased padding */
+            margin-bottom: 15px; /* Spacing between groups */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle lift */
+        }
+        .tab-content.zodiac-theme h4,
+        .tab-content.zodiac-theme .tab-group ul li strong {
+            color: #2c3e50; /* Darker text for readability on white groups */
+        }
+        .tab-content.zodiac-theme .tab-group h4 {
+            border-bottom-color: rgba(0, 0, 0, 0.2); /* Darker divider for contrast */
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .tab-content.zodiac-theme .tab-group ul li {
+            color: #2c3e50; /* Darker text for readability on white groups */
+            padding: 8px 0; /* Increased padding for list items */
+            border-bottom: 1px solid rgba(0,0,0,0.08); /* Thin, light divider */
+            display: flex; /* Flexbox for layout */
+            align-items: center; /* Vertically align items */
+            gap: 10px; /* Space between elements */
+        }
+        .tab-content.zodiac-theme .tab-group ul li:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+        .tab-content.zodiac-theme .tab-group ul li span.char-birthdate-display {
+            /* Birthdate/Inferred container styling */
+            background: rgba(0,0,0,0.05); /* Very subtle light background */
+            padding: 4px 8px; /* Padding for the container */
+            border-radius: 6px; /* Rounded corners for the container */
+            font-size: 0.8em; /* Slightly smaller font for birthdate */
+            white-space: nowrap; /* Prevent wrapping */
+            color: #2c3e50; /* Darker text for dates/Inf on white groups */
+            flex-shrink: 0; /* Prevent it from shrinking */
+            min-width: 55px; /* Set a minimum width for alignment consistency */
+            text-align: center; /* Center content within its own box */
+            box-sizing: border-box; /* Include padding/border in width calculation */
+        }
+        .tab-content.zodiac-theme .tab-group ul li span.char-birthdate-display.inferred-container {
+            /* MODIFIED: Make inferred container match non-inferred */
+            background-color: rgba(0,0,0,0.05); /* Match default birthdate background */
+            color: #2c3e50; /* Match default birthdate text color */
+            font-weight: normal; /* Reset font weight */
+            text-shadow: none; /* Remove text shadow */
+        }
+
+
+        .tab-content.mbti-theme {
+            /* Updated gradient for slightly desaturated orange */
+            background: linear-gradient(45deg, #ffa402, #df6b0d);
+        }
+        .tab-content.mbti-theme h3 {
+            background: rgba(0, 0, 0, 0.1); /* A very subtle, translucent dark background */
+            color: white; /* Keep white text for strong visual effect on orange */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Enhanced shadow for pop */
+        }
+        .tab-content.mbti-theme .tab-group {
+            background: #FFFFFF; /* Solid white */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px; /* Consistent rounding */
+            padding: 15px 20px; /* Increased padding */
+            margin-bottom: 15px; /* Spacing between groups */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle lift */
+        }
+        .tab-content.mbti-theme h4,
+        .tab-content.mbti-theme ul li strong {
+            color: #2c3e50; /* Dark text for readability */
+        }
+        .tab-content.mbti-theme .tab-group h4 {
+            border-bottom-color: rgba(0, 0, 0, 0.15); /* Darker divider for contrast */
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .tab-content.mbti-theme .tab-group ul li {
+            color: #2c3e50; /* Ensuring series names are dark and readable */
+            padding: 8px 0; /* Increased padding for list items */
+            border-bottom: 1px solid rgba(0,0,0,0.08); /* Thin, light divider */
+            display: flex; /* Use flex for alignment */
+            justify-content: space-between; /* Separate name/series from birthdate */
+            align-items: center; /* Vertical alignment */
+        }
+        .tab-content.mbti-theme .tab-group ul li:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+        .tab-content.mbti-theme .tab-group ul li span.char-birthdate-display {
+            color: #2c3e50; /* Ensure dates are dark and readable */
+            font-size: 0.85em; /* Maintain smaller font size */
+            white-space: nowrap; /* Prevent wrapping */
+            /* No container styling for MBTI dates, based on preference */
+        }
+
+
+        .tab-content.enneagram-theme {
+            /* Updated gradient for peach theme */
+            background: linear-gradient(135deg, #FFDDAA, #FFC37E);
+        }
+        .tab-content.enneagram-theme h3 {
+            color: #2c3e50; /* Darker header for contrast on peach */
+            text-shadow: none; /* Remove shadow if not needed with darker text */
+            background: rgba(0, 0, 0, 0.08); /* Subtle dark background for the header container */
+        }
+        .tab-content.enneagram-theme .tab-group {
+            background: #FFFFFF; /* Solid white */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px; /* Consistent rounding */
+            padding: 15px 20px; /* Increased padding */
+            margin-bottom: 15px; /* Spacing between groups */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle lift */
+        }
+        .tab-content.enneagram-theme h4,
+        .tab-content.enneagram-theme ul li strong {
+            color: #2c3e50; /* Dark text for readability */
+        }
+        .tab-content.enneagram-theme .tab-group h4 {
+            border-bottom-color: rgba(0, 0, 0, 0.15); /* Darker divider for contrast */
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .tab-content.enneagram-theme .tab-group ul li {
+            color: #2c3e50; /* Ensuring series names are dark and readable */
+            padding: 8px 0; /* Increased padding for list items */
+            border-bottom: 1px solid rgba(0,0,0,0.08); /* Thin, light divider */
+            display: flex; /* Use flex for alignment */
+            justify-content: space-between; /* Separate name/series from birthdate */
+            align-items: center; /* Vertical alignment */
+        }
+        .tab-content.enneagram-theme .tab-group ul li:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+        .tab-content.enneagram-theme .tab-group ul li span.char-birthdate-display {
+            color: #2c3e50; /* Ensure dates are dark and readable */
+            font-size: 0.85em; /* Maintain smaller font size */
+            white-space: nowrap; /* Prevent wrapping */
+            /* No container styling for Enneagram dates, based on preference */
+        }
+
+        /* Common for themed tabs */
+        .tab-content .tab-group ul li.n-a-item {
+            color: #95a5a6; /* Gray text for N/A items */
+        }
+
+        /* Original h4 default is fine */
+        .tab-group ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tab-group ul li strong {
+            font-weight: 700; /* Ensure strong names */
+        }
+
+
+        /* Back to list button in tab content */
+        .tab-content .btn-back {
+            display: block;
+            margin: 20px auto 0;
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            color: white;
+        }
+        .tab-content .btn-back:hover {
+            background: linear-gradient(45deg, #7f8c8d, #6c7a89);
+        }
+
+        /* Custom Tooltip Styles */
+        .custom-tooltip {
+            position: fixed; /* Use fixed positioning for tooltips appended to body */
+            background-color: #333; /* Dark background */
+            color: #fff; /* White text */
+            padding: 8px 12px;
+            border-radius: 8px; /* Rounded corners */
+            font-size: 0.85em;
+            white-space: normal; /* Allow text to wrap */
+            max-width: 250px; /* Max width for readability */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 2000; /* Ensure it's above other elements */
+            pointer-events: none; /* Allows clicks to pass through when not active */
+
+            /* Speech bubble arrow - uses CSS variables for easy adjustment */
+            --tooltip-arrow-bottom: -10px; /* Default: arrow points down (tooltip is above) */
+            --tooltip-arrow-top: auto;
+            --tooltip-arrow-transform: translateX(-50%) rotate(180deg);
+            --tooltip-arrow-border-color: #333 transparent transparent transparent;
+
+            &::after {
+                content: '';
+                position: absolute;
+                border-width: 5px;
+                border-style: solid;
+                border-color: var(--tooltip-arrow-border-color);
+                bottom: var(--tooltip-arrow-bottom);
+                top: var(--tooltip-arrow-top);
+                left: 50%;
+                transform: var(--tooltip-arrow-transform);
+            }
+        }
+
+        .custom-tooltip.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto; /* Allow clicks on the tooltip itself */
+        }
+        /* Style for the trigger, slightly different cursor */
+        .inferred-info-trigger {
+            cursor: help; /* A helpful cursor for the tooltip trigger */
+            position: relative; /* Needed for positioning the tooltip */
+            display: inline-block; /* Ensure it wraps around the text properly */
+            text-decoration: underline dotted; /* Subtle visual cue */
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-container {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+            .tab-buttons .btn {
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Favorite Anime Characters</h1>
+        <p class="subtitle">A curated collection of beloved characters from various anime series</p>
+
+        <div class="stats">
+            <h3>Collection Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total Characters</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="seriesCount">0</div>
+                    <div class="stat-label">Different Series</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="womenCount">0</div>
+                    <div class="stat-label" id="womenLabel">This includes women!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="showTab('addForm')">Add New Character</button>
+            <button class="btn btn-success" onclick="saveList()">Save Changes</button>
+            <button class="btn btn-warning" onclick="exportList()">Export List</button>
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="Search characters or series..." oninput="filterCharacters(this.value)">
+                <div class="search-results-info" id="searchInfo"></div>
+            </div>
+            <div class="tab-buttons">
+                <button class="btn" onclick="showTab('zodiacDisplay')">Signs</button>
+                <button class="btn" onclick="showTab('mbtiDisplay')">MBTI</button>
+                <button class="btn" onclick="showTab('enneagramDisplay')">Enneagram</button>
+                <button class="btn" onclick="exportDataJson()">Export JSON</button>
+                <input type="file" id="importJsonFile" accept=".json" style="display: none;" onchange="importDataJson(event)">
+                <button class="btn" onclick="document.getElementById('importJsonFile').click()">Import JSON</button>
+            </div>
+        </div>
+
+        <div class="add-form" id="addForm">
+            <h3 style="margin-bottom: 20px; color: #2c3e50;">Add New Character</h3>
+            <div class="form-group">
+                <label for="charName">Character Name:</label>
+                <input type="text" id="charName" placeholder="Enter character name">
+            </div>
+            <div class="form-group suggestions-container">
+                <label for="charSeries">Series:</label>
+                <input type="text" id="charSeries" placeholder="Enter anime series">
+                <div id="seriesSuggestions" class="series-suggestions">
+                    </div>
+            </div>
+            <div class="form-group checkbox-group">
+                <label for="charIsWoman">Woman?</label>
+                <input type="checkbox" id="charIsWoman">
+            </div>
+            <div class="form-group">
+                <label for="charBirthdate">Birthdate (DD/MM (For Inferred, type in a Sign; NA otherwise))</label>
+                <input type="text" id="charBirthdate" placeholder="e.g., 01/06 or Aries">
+            </div>
+            <div class="form-group">
+                <label for="charMBTI">MBTI:</label>
+                <input type="text" id="charMBTI" placeholder="e.g., INFP">
+            </div>
+            <div class="form-group">
+                <label for="charEnneagram">Enneagram:</label>
+                <input type="text" id="charEnneagram" placeholder="e.g., 8w7">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-success" onclick="addCharacter()">Add Character</button>
+                <button class="btn btn-danger" onclick="showTab('characterGrid')">Cancel</button>
+            </div>
+        </div>
+
+        <div class="character-grid" id="characterGrid">
+            </div>
+
+        <div class="tab-content zodiac-theme" id="zodiacDisplay">
+            <h3>Characters by Zodiac Sign</h3>
+            <button class="btn btn-back" onclick="showTab('characterGrid')">Back to List</button>
+        </div>
+
+        <div class="tab-content mbti-theme" id="mbtiDisplay">
+            <h3>Characters by MBTI Type</h3>
+            <button class="btn btn-back" onclick="showTab('characterGrid')">Back to List</button>
+        </div>
+
+        <div class="tab-content enneagram-theme" id="enneagramDisplay">
+            <h3>Characters by Enneagram Type</h3>
+            <button class="btn btn-back" onclick="showTab('characterGrid')">Back to List</button>
+        </div>
+
+        <div class="last-updated">
+            Last updated: <span id="lastUpdated">June 9, 2025</span>
+        </div>
+    </div>
+
+    <script>
+        // --- Core Character Data (User must manually add new properties here for existing characters) ---
+        let characters = [
+            // Example characters with updated properties, including streamlined gender, MBTI, Birthdate, and Enneagram
+            // Please update your full character list with 'gender: "Female"' or 'gender: "Not Female"' and 'mbti: "..."'
+            {name: "Kokichi Ouma", series: "Danganronpa", gender: "Not Female", birthdate: "21/06", mbti: "INTJ", enneagram: "7w8"},
+            {name: "Hotaro Oreki", series: "Hyouka", gender: "Not Female", birthdate: "28/04", mbti: "INTP", enneagram: "5w4"},
+            {name: "Vanitas", series: "The Case Study of Vanitas", gender: "Not Female", birthdate: "14/08", mbti: "ENTP", enneagram: "7w6"},
+            {name: "Pina", series: "Beastars", gender: "Not Female", birthdate: "05/11", mbti: "ESFP", enneagram: "3w2"},
+            {name: "Hachiman Hikigaya", series: "Oregairu", gender: "Not Female", birthdate: "08/08", mbti: "INTP", enneagram: "5w4"},
+            {name: "Louis", series: "Beastars", gender: "Not Female", birthdate: "29/03", mbti: "INTJ", enneagram: "3w4"},
+            {name: "Legoshi", series: "Beastars", gender: "Not Female", birthdate: "12/04", mbti: "ISFJ", enneagram: "9w1"},
+            {name: "Asuka Langley Soryu", series: "Neon Genesis Evangelion", gender: "Female", birthdate: "04/12", mbti: "ESTP", enneagram: "8w7"},
+            {name: "Satoshi Fukube", series: "Hyouka", gender: "Not Female", birthdate: "Gemini", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Shinji Ikari", series: "Neon Genesis Evangelion", gender: "Not Female", birthdate: "06/06", mbti: "INFP", enneagram: "6w5"},
+            {name: "Alois Trancy", series: "Black Butler", gender: "Not Female", birthdate: "05/11", mbti: "ESFP", enneagram: "4w3"},
+            {name: "Ciel Phantomhive", series: "Black Butler", gender: "Not Female", birthdate: "14/12", mbti: "INTJ", enneagram: "5w6"},
+            {name: "Bill", series: "Beastars", gender: "Not Female", birthdate: "20/07", mbti: "ESTJ", enneagram: "8w7"},
+            {name: "Yukine", series: "Noragami", gender: "Not Female", birthdate: "11/06", mbti: "ESTP", enneagram: "6w7"},
+            {name: "Hanako", series: "Toilet-bound Hanako-kun", gender: "Not Female", birthdate: "Scorpio", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Kirio Ami", series: "Welcome to Demon School! Iruma-kun", gender: "Not Female", birthdate: "13/03", mbti: "INFP", enneagram: "4w5"},
+            {name: "Kei Tsukishima", series: "Haikyuu!!", gender: "Not Female", birthdate: "27/09", mbti: "INTJ", enneagram: "5w6"},
+            {name: "Nezumi", series: "No. 6", gender: "Not Female", birthdate: "Scorpio", mbti: "ISTP", enneagram: "6w5"},
+            {name: "Tadashi Yamaguchi", series: "Haikyuu!!", gender: "Not Female", birthdate: "10/11", mbti: "ISFJ", enneagram: "6w7"},
+            {name: "Yukio Okumura", series: "Blue Exorcist", gender: "Not Female", birthdate: "27/12", mbti: "ISTJ", enneagram: "5w6"},
+            {name: "Byakuya Togami", series: "Danganronpa", gender: "Not Female", birthdate: "03/05", mbti: "INTJ", enneagram: "1w2"},
+            {name: "Jack", series: "Beastars", gender: "Not Female", birthdate: "18/10", mbti: "ENFJ", enneagram: "2w1"},
+            {name: "Renzo Shima", series: "Blue Exorcist", gender: "Not Female", birthdate: "19/07", mbti: "ESFP", enneagram: "7w6"},
+            {name: "Keibo", series: "Danganronpa V3", gender: "Not Female", birthdate: "03/03", mbti: "ISTJ", enneagram: "1w2"},
+            {name: "Tomura Shigaraki", series: "My Hero Academia", gender: "Not Female", birthdate: "04/04", mbti: "INTJ", enneagram: "8w9"},
+            {name: "Otto Suwen", series: "Re:Zero", gender: "Not Female", birthdate: "24/03", mbti: "ENFP", enneagram: "6w7"},
+            {name: "Tobio Kageyama", series: "Haikyuu!!", gender: "Not Female", birthdate: "22/12", mbti: "ISTJ", enneagram: "1w9"},
+            {name: "Kaworu Nagisa", series: "Neon Genesis Evangelion", gender: "Not Female", birthdate: "13/09", mbti: "INFJ", enneagram: "9w1"},
+            {name: "Gowther", series: "The Seven Deadly Sins", gender: "Not Female", birthdate: "02/06", mbti: "INTP", enneagram: "5w6"},
+            {name: "Kou Minamoto", series: "Toilet-bound Hanako-kun", gender: "Not Female", birthdate: "Aries", mbti: "ESFJ", enneagram: "2w1"},
+            {name: "Noé Archiviste", series: "The Case Study of Vanitas", gender: "Not Female", birthdate: "28/09", mbti: "ISFJ", enneagram: "1w2"},
+            {name: "Rin Okumura", series: "Blue Exorcist", gender: "Not Female", birthdate: "27/12", mbti: "ESFP", enneagram: "7w8"},
+            {name: "Saika Totsuka", series: "Oregairu", gender: "Not Female", birthdate: "15/05", mbti: "ISFP", enneagram: "9w1"},
+            {name: "Hanzo Urushihara", series: "The Devil Is a Part-Timer!", gender: "Not Female", birthdate: "Scorpio", mbti: "INTP", enneagram: "5w4"},
+            {name: "Kyo Souma", series: "Fruits Basket", gender: "Not Female", birthdate: "Aries", mbti: "ISTP", enneagram: "6w7"},
+            {name: "Shoyo Hinata", series: "Haikyuu!!", gender: "Not Female", birthdate: "21/06", mbti: "ESFP", enneagram: "7w8"},
+            {name: "Ryuuji Suguro {Bon}", series: "Blue Exorcist", gender: "Not Female", birthdate: "03/09", mbti: "ESTJ", enneagram: "1w2"},
+            {name: "Shion", series: "No. 6", gender: "Not Female", birthdate: "07/09", mbti: "INFJ", enneagram: "9w1"},
+            {name: "Laito Sakamaki", series: "Diabolik Lovers", gender: "Not Female", birthdate: "20/03", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Lavi", series: "D.Gray-Man", gender: "Not Female", birthdate: "10/08", mbti: "ENFP", enneagram: "7w8"},
+            {name: "Hajime Hinata", series: "Danganronpa", gender: "Not Female", birthdate: "01/01", mbti: "ISTP", enneagram: "6w5"},
+            {name: "Sousuke Mitsuba", series: "Toilet-bound Hanako-kun", gender: "Not Female", birthdate: "Pisces", mbti: "ISFP", enneagram: "4w5"},
+            {name: "Fuyuhiko Kuzuryu", series: "Danganronpa", gender: "Not Female", birthdate: "16/08", mbti: "ISTJ", enneagram: "8w9"},
+            {name: "Kazuichi Souda", series: "Danganronpa", gender: "Not Female", birthdate: "29/06", mbti: "ESFP", enneagram: "6w7"},
+            {name: "Katsuki Bakugo", series: "My Hero Academia", gender: "Not Female", birthdate: "20/04", mbti: "ESTP", enneagram: "8w7"},
+            {name: "Lelouch Lamperouge", series: "Code Geass", gender: "Not Female", birthdate: "05/12", mbti: "INTJ", enneagram: "1w9"},
+            {name: "Kai", series: "Beastars", gender: "Not Female", birthdate: "03/07", mbti: "ESTJ", enneagram: "1w9"},
+            {name: "Sou Hiyori", series: "Your Turn to Die", gender: "Not Female", birthdate: "20/02", mbti: "INTP", enneagram: "5w4"},
+            {name: "Garfiel Tinsel", series: "Re:Zero", gender: "Not Female", birthdate: "19/08", mbti: "ESTP", enneagram: "7w8"},
+            {name: "Misato Katsuragi", series: "Neon Genesis Evangelion", gender: "Female", birthdate: "08/12", mbti: "ENFJ", enneagram: "7w8"},
+            {name: "Gilbert Nightray", series: "Pandora Hearts", gender: "Not Female", birthdate: "15/07", mbti: "ISTP", enneagram: "6w5"},
+            {name: "Subaru Sakamaki", series: "Diabolik Lovers", gender: "Not Female", birthdate: "08/02", mbti: "ISTP", enneagram: "8w9"},
+            {name: "Yusuke Fujisaki {Bosun}", series: "SKET Dance", gender: "Not Female", birthdate: "25/11", mbti: "ENFJ", enneagram: "2w3"},
+            {name: "Ejiro Kirishima", series: "My Hero Academia", gender: "Not Female", birthdate: "16/10", mbti: "ESFJ", enneagram: "9w8"},
+            {name: "Ace Trappola", series: "Twisted Wonderland", gender: "Not Female", birthdate: "25/09", mbti: "ESTP", enneagram: "7w8"},
+            {name: "Epel Felmier", series: "Twisted Wonderland", gender: "Not Female", birthdate: "06/05", mbti: "ISFJ", enneagram: "6w7"},
+            {name: "King", series: "The Seven Deadly Sins", gender: "Not Female", birthdate: "01/04", mbti: "ISFP", enneagram: "4w5"},
+            {name: "Chihiro Fujisaki", series: "Danganronpa", gender: "Female", birthdate: "14/03", mbti: "ISFP", enneagram: "6w7"},
+            {name: "Okuto Nakamura", series: "Go For It, Nakamura!", gender: "Not Female", birthdate: "22/01", mbti: "INFP", enneagram: "5w4"},
+            {name: "Deuce Spade", series: "Twisted Wonderland", gender: "Not Female", birthdate: "03/06", mbti: "ISFP", enneagram: "6w5"},
+            {name: "Himiko Yumeno", series: "Danganronpa V3", gender: "Female", birthdate: "03/12", mbti: "INFP", enneagram: "4w5"},
+            {name: "Kazuyoshi Usui {Switch}", series: "SKET Dance", gender: "Not Female", birthdate: "28/02", mbti: "INTP", enneagram: "5w4"},
+            {name: "Emilia", series: "Re:Zero", gender: "Female", birthdate: "23/09", mbti: "ENFJ", enneagram: "2w1"},
+            {name: "Aiki Hirose", series: "Go For It, Nakamura!", gender: "Not Female", birthdate: "02/03", mbti: "ENFJ", enneagram: "3w2"},
+            {name: "Shoto Todoroki", series: "My Hero Academia", gender: "Not Female", birthdate: "11/01", mbti: "ISTJ", enneagram: "1w9"},
+            {name: "Hime Onizuka {Himeko}", series: "SKET Dance", gender: "Female", birthdate: "07/07", mbti: "ESTP", enneagram: "8w7"},
+            {name: "Koushi Sugawara", series: "Haikyuu!!", gender: "Not Female", birthdate: "13/06", mbti: "ENFJ", enneagram: "2w1"},
+            {name: "Subaru Natsuki", series: "Re:Zero", gender: "Not Female", birthdate: "01/04", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Tsuyu Asui {Froppy}", series: "My Hero Academia", gender: "Female", birthdate: "12/02", mbti: "ISTP", enneagram: "9w8"},
+            {name: "Tooru Oikawa", series: "Haikyuu!!", gender: "Not Female", birthdate: "20/07", mbti: "ENFJ", enneagram: "3w4"},
+            {name: "Xerxes Break", series: "Pandora Hearts", gender: "Not Female", birthdate: "30/09", mbti: "ENTP", enneagram: "7w8"},
+            {name: "Sonia Nevermind", series: "Danganronpa", gender: "Female", birthdate: "13/10", mbti: "ENFJ", enneagram: "2w3"},
+            {name: "Ayato Sakamaki", series: "Diabolik Lovers", gender: "Not Female", birthdate: "22/03", mbti: "ESTP", enneagram: "8w7"},
+            {name: "Amaimon", series: "Blue Exorcist", gender: "Not Female", birthdate: "Aquarius", mbti: "ENFP", enneagram: "7w8"},
+            {name: "Denki Kaminari", series: "My Hero Academia", gender: "Not Female", birthdate: "29/06", mbti: "ESFP", enneagram: "7w6"},
+            {name: "Dominique de Sade", series: "The Case Study of Vanitas", gender: "Female", birthdate: "01/06", mbti: "ESFJ", enneagram: "2w3"},
+            {name: "Yui Yuigahama", series: "Oregairu", gender: "Female", birthdate: "18/06", mbti: "ESFJ", enneagram: "2w1"},
+            {name: "Yato", series: "Noragami", gender: "Not Female", birthdate: "Sagittarius", mbti: "ENTP", enneagram: "3w4"},
+            {name: "William James Moriarty", series: "Moriarty The Patriot", gender: "Not Female", birthdate: "01/04", mbti: "INTJ", enneagram: "1w2"},
+            {name: "Kenma Kozume", series: "Haikyuu!!", gender: "Not Female", birthdate: "16/10", mbti: "INTP", enneagram: "5w4"},
+            {name: "Shuichi Saihara", series: "Danganronpa V3", gender: "Not Female", birthdate: "07/09", mbti: "INFJ", enneagram: "6w5"},
+            {name: "Yuuri Plisetsky", series: "Yuri!!! on Ice", gender: "Not Female", birthdate: "01/03", mbti: "ENTJ", enneagram: "3w4"},
+            {name: "Ayame Souma", series: "Fruits Basket", gender: "Not Female", birthdate: "Leo", mbti: "ESFP", enneagram: "3w2"},
+            {name: "Ryuuji Takasu", series: "Toradora!", gender: "Not Female", birthdate: "11/04", mbti: "ISTJ", enneagram: "9w1"},
+            {name: "Oz Vessalius", series: "Pandora Hearts", gender: "Not Female", birthdate: "26/12", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Izuku Midoriya", series: "My Hero Academia", gender: "Not Female", birthdate: "15/07", mbti: "INFJ", enneagram: "6w5"},
+            {name: "Azul Ashengrotto", series: "Twisted Wonderland", gender: "Not Female", birthdate: "24/02", mbti: "ENTJ", enneagram: "3w4"},
+            {name: "Ban", series: "The Seven Deadly Sins", gender: "Not Female", birthdate: "14/02", mbti: "ESTP", enneagram: "7w8"},
+            {name: "Hitoshi Shinso", series: "My Hero Academia", gender: "Not Female", birthdate: "01/07", mbti: "INTP", enneagram: "5w6"},
+            {name: "Ameri Azazel", series: "Welcome to Demon School! Iruma-kun", gender: "Female", birthdate: "25/08", mbti: "ENFJ", enneagram: "3w2"},
+            {name: "Riddle Rosehearts", series: "Twisted Wonderland", gender: "Not Female", birthdate: "24/08", mbti: "ISTJ", enneagram: "1w2"},
+            {name: "Yuki Souma", series: "Fruits Basket", gender: "Not Female", birthdate: "Aquarius", mbti: "INFJ", enneagram: "4w3"},
+            {name: "Ruggie Bucchi", series: "Twisted Wonderland", gender: "Not Female", birthdate: "18/04", mbti: "ESTP", enneagram: "3w2"},
+            {name: "Ryunosuke Tanaka", series: "Haikyuu!!", gender: "Not Female", birthdate: "03/03", mbti: "ESTP", enneagram: "7w8"},
+            {name: "Alice {B-Rabbit}", series: "Pandora Hearts", gender: "Female", birthdate: "Aries", mbti: "ESTP", enneagram: "8w7"},
+            {name: "Izumo Komiki", series: "Blue Exorcist", gender: "Female", birthdate: "11/10", mbti: "ISTJ", enneagram: "5w6"},
+            {name: "Iruma Suzuki", series: "Welcome to Demon School! Iruma-kun", gender: "Not Female", birthdate: "04/10", mbti: "ENFJ", enneagram: "9w1"},
+            {name: "Yuuri Katsuki", series: "Yuri!!! on Ice", gender: "Not Female", birthdate: "29/11", mbti: "INFP", enneagram: "9w1"},
+            {name: "Lilia Vanrouge", series: "Twisted Wonderland", gender: "Not Female", birthdate: "01/01", mbti: "ENTP", enneagram: "7w8"},
+            {name: "Konekomaru Miwa", series: "Blue Exorcist", gender: "Not Female", birthdate: "05/01", mbti: "ISFJ", enneagram: "6w5"},
+            {name: "Dabi", series: "My Hero Academia", gender: "Not Female", birthdate: "18/01", mbti: "INTJ", enneagram: "4w3"},
+            {name: "Tamaki Amajiki", series: "My Hero Academia", gender: "Not Female", birthdate: "04/03", mbti: "INFP", enneagram: "9w1"},
+            {name: "Finny", series: "Black Butler", gender: "Not Female", birthdate: "01/04", mbti: "ESFP", enneagram: "7w6"},
+            {name: "Kazuya Kujo", series: "Gosick", gender: "Not Female", birthdate: "02/09", mbti: "INFP", enneagram: "2w1"},
+            {name: "Astolfo Granatum", series: "The Case Study of Vanitas", gender: "Not Female", birthdate: "06/01", mbti: "ESFP", enneagram: "7w6"},
+            {name: "Lev Haiba", series: "Haikyuu!!", gender: "Not Female", birthdate: "30/10", mbti: "ENFP", enneagram: "7w8"},
+            {name: "Kazuma", series: "Noragami", gender: "Not Female", birthdate: "Virgo", mbti: "ISTJ", enneagram: "1w9"},
+            {name: "Fushi", series: "To Your Eternity", gender: "Not Female", birthdate: "01/01", mbti: "ISFP", enneagram: "9w1"},
+            {name: "Leona Kingscholar", series: "Twisted Wonderland", gender: "Not Female", birthdate: "27/07", mbti: "ISTP", enneagram: "8w9"},
+            {name: "Yu Nishinoya", series: "Haikyuu!!", gender: "Not Female", birthdate: "10/10", mbti: "ESFP", enneagram: "7w6"},
+            {name: "Dagger", series: "Black Butler", gender: "Not Female", birthdate: "03/06", mbti: "ENFJ", enneagram: "3w2"},
+            {name: "Toto Noel {Rio Ranger}", series: "Your Turn to Die", gender: "Not Female", birthdate: "01/01", mbti: "ENTP", enneagram: "7w8"},
+            {name: "Louis James Moriarty", series: "Moriarty The Patriot", gender: "Not Female", birthdate: "06/02", mbti: "ISTJ", enneagram: "6w5"},
+            {name: "Shirou Ashiya {Alciel}", series: "The Devil Is a Part-Timer!", gender: "Not Female", birthdate: "13/05", mbti: "ISTJ", enneagram: "6w5"},
+            {name: "Lied Shax", series: "Welcome to Demon School! Iruma-kun", gender: "Not Female", birthdate: "13/09", mbti: "ESTP", enneagram: "7w6"},
+            {name: "Sasuke Tsubaki", series: "SKET Dance", gender: "Not Female", birthdate: "11/11", mbti: "ESTJ", enneagram: "1w9"},
+            {name: "Helbram", series: "The Seven Deadly Sins", gender: "Not Female", birthdate: "05/05", mbti: "ENTP", enneagram: "9w1"},
+            {name: "Sakuta Azusagawa", series: "Rascal Does Not Dream of Bunny Girl Senpai", gender: "Not Female", birthdate: "10/04", mbti: "ISTP", enneagram: "9w8"},
+            {name: "Merlin", series: "The Seven Deadly Sins", gender: "Female", birthdate: "03/12", mbti: "INTJ", enneagram: "5w6"},
+            {name: "Alikred", series: "D.Gray-Man", gender: "Not Female", birthdate: "25/11", mbti: "ENTP", enneagram: "7w6"},
+            {name: "Alice Yabusame", series: "Your Turn to Die", gender: "Not Female", birthdate: "26/11", mbti: "ISFP", enneagram: "6w7"},
+            {name: "Miu Iruma", series: "Danganronpa V3", gender: "Female", birthdate: "16/11", mbti: "ESTP", enneagram: "7w8"},
+            {name: "Snake", series: "Black Butler", gender: "Not Female", birthdate: "13/01", mbti: "ISTP", enneagram: "9w8"},
+            {name: "Yoshiki Tsujinaka", series: "The Summer Hikaru Died", gender: "Not Female", birthdate: "05/09", mbti: "ISTJ", enneagram: "1w9"},
+            {name: "Arthur Pendragon", series: "The Seven Deadly Sins", gender: "Not Female", birthdate: "17/08", mbti: "ENFP", enneagram: "2w3"},
+            {name: "Kanato Sakamaki", series: "Diabolik Lovers", gender: "Not Female", birthdate: "29/03", mbti: "INFP", enneagram: "4w5"},
+            {name: "Doll", series: "Black Butler", gender: "Female", birthdate: "15/02", mbti: "ISFP", enneagram: "9w1"},
+            {name: "Momiji Souma", series: "Fruits Basket", gender: "Not Female", birthdate: "21/03", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Allen Walker", series: "D.Gray-Man", gender: "Not Female", birthdate: "25/12", mbti: "INFJ", enneagram: "6w5"},
+            {name: "Floyd Leech", series: "Twisted Wonderland", gender: "Not Female", birthdate: "28/05", mbti: "ESFP", enneagram: "7w8"},
+            {name: "Dino Cavallone", series: "Katekyo Hitman Reborn!", gender: "Not Female", birthdate: "04/02", mbti: "ENFJ", enneagram: "7w6"},
+            {name: "Gin Ibushi", series: "Your Turn to Die", gender: "Not Female", birthdate: "05/05", mbti: "ISFP", enneagram: "9w1"},
+            {name: "Gundham Tanaka", series: "Danganronpa", gender: "Not Female", birthdate: "14/12", mbti: "INFJ", enneagram: "4w3"},
+            {name: "Kofuku Ebisu", series: "Noragami", gender: "Female", birthdate: "08/03", mbti: "ESFP", enneagram: "7w6"},
+            {name: "Tet", series: "No Game No Life", gender: "Not Female", birthdate: "N/A", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Shimba Michiru", series: "SKET Dance", gender: "Not Female", birthdate: "09/09", mbti: "ENFJ", enneagram: "2w1"},
+            {name: "Touji Seryou", series: "Seven Days", gender: "Not Female", birthdate: "07/07", mbti: "ENFJ", enneagram: "1w9"},
+            {name: "Zeldris", series: "The Seven Deadly Sins", gender: "Not Female", birthdate: "05/02", mbti: "ENTJ", enneagram: "8w9"},
+            {name: "Gilthunder", series: "The Seven Deadly Sins", gender: "Not Female", birthdate: "10/01", mbti: "ISTJ", enneagram: "1w2"},
+            {name: "Kyouya Hibari", series: "Katekyo Hitman Reborn!", gender: "Not Female", birthdate: "05/05", mbti: "ISTJ", enneagram: "5w6"},
+            {name: "Hikaru Indo", series: "The Summer Hikaru Died", gender: "Not Female", birthdate: "N/A", mbti: "ESFP", enneagram: "6w7"},
+            {name: "Hiyori Ikki", series: "Noragami", gender: "Female", birthdate: "28/06", mbti: "ESFJ", enneagram: "2w1"},
+            {name: "Armin Arlert", series: "Attack on Titan", gender: "Not Female", birthdate: "03/11", mbti: "INFJ", enneagram: "6w5"},
+            {name: "Alice Asmodeus", series: "Welcome to Demon School! Iruma-kun", gender: "Not Female", birthdate: "12/03", mbti: "ISTJ", enneagram: "1w2"},
+            {name: "Nene Yashiro", series: "Toilet-bound Hanako-kun", gender: "Female", birthdate: "17/08", mbti: "ESFJ", enneagram: "2w3"},
+            {name: "Ryota Mitarai", series: "Danganronpa", gender: "Not Female", birthdate: "16/09", mbti: "INFP", enneagram: "9w1"},
+            {name: "Ryunosuke Akutagawa", series: "Bungo Stray Dogs", gender: "Not Female", gender: "Not Female", birthdate: "01/03", mbti: "ISFP", enneagram: "4w5"},
+            {name: "Connie Springer", series: "Attack on Titan", gender: "Not Female", birthdate: "02/05", mbti: "ESFP", enneagram: "7w6"},
+            {name: "Ranmaru Kageyama", series: "Your Turn to Die", gender: "Not Female", birthdate: "02/02", mbti: "INTP", enneagram: "5w4"},
+            {name: "Yui Komori", series: "Diabolik Lovers", gender: "Female", birthdate: "17/04", mbti: "ISFJ", enneagram: "9w1"},
+            {name: "Kanna Kizuchi", series: "Your Turn to Die", gender: "Female", birthdate: "03/03", mbti: "INFP", enneagram: "6w7"},
+            {name: "Midori", series: "Your Turn to Die", gender: "Not Female", birthdate: "N/A", mbti: "ENTP", enneagram: "7w8"},
+            {name: "Akito Souma", series: "Fruits Basket", gender: "Female", birthdate: "N/A", mbti: "INFP", enneagram: "4w5"},
+            {name: "Tohru Honda", series: "Fruits Basket", gender: "Female", birthdate: "01/05", mbti: "ESFJ", enneagram: "2w1"},
+            {name: "Mafuyu Sato", series: "given", gender: "Not Female", birthdate: "N/A", mbti: "INFP", enneagram: "9w1"},
+            {name: "Hange Zoe", series: "Attack on Titan", gender: "Female", birthdate: "05/09", mbti: "ENTP", enneagram: "7w8"},
+            {name: "Osamu Dazai", series: "Bungo Stray Dogs", gender: "Not Female", birthdate: "19/06", mbti: "ENTP", enneagram: "7w6"},
+            {name: "Abel", series: "Saint Cecilia and Pastor Lawrence", gender: "Not Female", birthdate: "N/A", mbti: "ENTP", enneagram: "7w6"},
+            {name: "Ugetsu Murata", series: "given", gender: "Not Female", birthdate: "N/A", mbti: "ISFP", enneagram: "4w5"},
+            {name: "Hayato Gokudera", series: "Katekyo Hitman Reborn!", gender: "Not Female", birthdate: "09/09", mbti: "ISTJ", enneagram: "1w2"},
+            {name: "Yuma Mukami", series: "Diabolik Lovers", gender: "Not Female", birthdate: "24/07", mbti: "ESTP", enneagram: "8w7"},
+            {name: "Levi Ackerman", series: "Attack on Titan", gender: "Not Female", birthdate: "25/12", mbti: "ISTP", enneagram: "5w6"},
+            {name: "Sen Kaibara", series: "My Hero Academia", gender: "Not Female", birthdate: "12/06", mbti: "ESTJ", enneagram: "3w2"},
+            {name: "Shihai Kuroiro {Ventablack}", series: "My Hero Academia", gender: "Not Female", birthdate: "01/01", mbti: "INTJ", enneagram: "5w4"},
+            {name: "Elizabeth Liones", series: "The Seven Deadly Sins", gender: "Female", birthdate: "12/06", mbti: "ISFJ", enneagram: "2w1"},
+            {name: "Kiyotaka Ayanokouji", series: "Classroom of the Elite", gender: "Not Female", birthdate: "20/12", mbti: "INTJ", enneagram: "5w6"},
+            {name: "Lawrence", series: "Saint Cecilia and Pastor Lawrence", gender: "Not Female", birthdate: "08/04", mbti: "ENFJ", enneagram: "1w9"},
+            {name: "Azusa Mukami", series: "Diabolik Lovers", gender: "Not Female", birthdate: "28/10", mbti: "INFP", enneagram: "4w5"},
+            {name: "Ochako Uraraka", series: "My Hero Academia", gender: "Female", birthdate: "27/12", mbti: "ESFJ", enneagram: "2w3"},
+            {name: "Tanaka", series: "Tanaka-kun Is Always Listless", gender: "Not Female", birthdate: "N/A", mbti: "INTP", enneagram: "9w1"},
+            {name: "Kou Mukami", series: "Diabolik Lovers", gender: "Not Female", birthdate: "28/01", mbti: "ESFP", enneagram: "3w4"},
+            {name: "Euphemia LI Britannia", series: "Code Geass", gender: "Female", birthdate: "16/05", mbti: "ENFP", enneagram: "2w1"},
+            {name: "Arystar Krory III", series: "D.Gray-Man", gender: "Not Female", birthdate: "01/12", mbti: "INFP", enneagram: "9w1"},
+            {name: "Sonosuke Izayoi", series: "Danganronpa", gender: "Not Female", birthdate: "20/02", mbti: "ISTP", enneagram: "5w6"},
+            {name: "Shu Sakamaki", series: "Diabolik Lovers", gender: "Not Female", birthdate: "18/10", mbti: "ISTP", enneagram: "9w8"},
+            {name: "Ruruka Ando", series: "Danganronpa", gender: "Female", birthdate: "11/11", mbti: "ESFJ", enneagram: "3w2"},
+            {name: "Minako Okukawa", series: "Yuri!!! on Ice", gender: "Female", birthdate: "N/A", mbti: "ENFP", enneagram: "7w6"},
+            {name: "Tsunayoshi Sawada", series: "Katekyo Hitman Reborn!", gender: "Not Female", birthdate: "14/10", mbti: "INFP", enneagram: "9w1"}
+        ];
+
+        let filteredCharacters = [...characters];
+        let knownSeriesData = [];
+        const seriesInput = document.getElementById('charSeries');
+        const seriesSuggestions = document.getElementById('seriesSuggestions');
+        let currentActiveTab = 'characterGrid'; // Tracks currently active tab for toggle logic
+
+        // --- Series Aliases (filtered to only include mappings to *your* existing series) ---
+        const allPossibleSeriesAliases = {
+            "tbhk": "Toilet-bound Hanako-kun",
+            "mha": "My Hero Academia",
+            "danmachi": "Is It Wrong to Pick Up Girls in a Dungeon?",
+            "slimes 300 years": "I've Been Killing Slimes for 300 Years and Maxed Out My Level",
+            "300 years": "I've Been Killing Slimes for 300 Years and Maxed Out My Level",
+            "killing slimes": "I've Been Killing Slimes for 300 Years and Maxed Out My Level",
+            "nana": "Nana",
+            "snk": "Attack on Titan",
+            "jjk": "Jujutsu Kaisen",
+            "knp": "Kuroko's Basketball",
+            "hxh": "Hunter x Hunter",
+            "fma": "Fullmetal Alchemist",
+            "fma:b": "Fullmetal Alchemist: Brotherhood",
+            "op": "One Piece",
+            "dbz": "Dragon Ball Z",
+            "jojo": "JoJo's Bizarre Adventure",
+            "jjba": "JoJo's Bizarre Adventure",
+            "aot": "Attack on Titan",
+            "re zero": "Re:Zero",
+            "blue ex": "Blue Exorcist",
+            "tbhk": "Toilet-bound Hanako-kun",
+            "ds": "Demon Slayer: Kimetsu no Yaiba",
+            "welcome to demon school": "Welcome to Demon School! Iruma-kun",
+            "welcome demon school": "Welcome to Demon School! Iruma-kun",
+            "black but": "Black Butler",
+            "seven deadly sins": "The Seven Deadly Sins",
+            "case study": "The Case Study of Vanitas",
+            "oregairu": "Oregairu",
+            "devil is a part timer": "The Devil Is a Part-Timer!",
+            "fruits basket": "Fruits Basket",
+            "haikyu": "Haikyuu!!",
+            "diabolik": "Diabolik Lovers",
+            "sket dance": "SKET Dance",
+            "re:zero": "Re:Zero",
+            "twisted wonderland": "Twisted Wonderland",
+            "go for it nakamura": "Go For It, Nakamura!",
+            "moriarty": "Moriarty The Patriot",
+            "yuri on ice": "Yuri!!! on Ice",
+            "toradora": "Toradora!",
+            "pandora": "Pandora Hearts",
+            "to your eternity": "To Your Eternity",
+            "d gray man": "D.Gray-Man",
+            "your turn to die": "Your Turn to Die",
+            "khr": "Katekyo Hitman Reborn!",
+            "danganronpa v3": "Danganronpa V3",
+
+            "my youth romantic comedy is wrong as i expected": "Oregairu",
+            "my teen romantic comedy snafu": "Oregairu",
+            "my romantic comedy": "Oregairu",
+            "evangelion": "Neon Genesis Evangelion",
+            "nge": "Neon Genesis Evangelion",
+            "vanitas no carte": "The Case Study of Vanitas",
+            "hataraku maou-sama": "The Devil Is a Part-Timer!",
+            "nanatsu no taizai": "The Seven Deadly Sins",
+            "ao no exorcist": "Blue Exorcist",
+            "mairimashita iruma-kun": "Welcome to Demon School! Iruma-kun",
+            "haikyuu": "Haikyuu!!",
+            "kuroshitsuji": "Black Butler",
+            "d grayman": "D.Gray-Man",
+            "pandorahearts": "Pandora Hearts",
+            "re zero starting life in another world": "Re:Zero",
+            "re:zero starting life in another world": "Re:Zero",
+            "rezero": "Re:Zero",
+            "kimi ga shine": "Your Turn to Die",
+            "toilet bound hanako kun": "Toilet-bound Hanako-kun",
+            "my hero": "My Hero Academia"
+        };
+
+        // --- Helper Functions for Fuzzy Matching and Keywords ---
+        function levenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function generateKeywords(seriesName) {
+            const lowerCaseName = seriesName.toLowerCase();
+            const words = lowerCaseName.split(/[\s-:\(\)!?\.,]+/).filter(word => word.length > 2);
+
+            let keywords = new Set();
+            words.forEach(word => keywords.add(word));
+
+            for (let i = 0; i < words.length; i++) {
+                if (words[i + 1]) keywords.add(`${words[i]} ${words[i + 1]}`);
+                if (words[i + 2]) keywords.add(`${words[i]} ${words[i + 1]} ${words[i + 2]}`);
+                if (words[i + 3]) keywords.add(`${words[i]} ${words[i + 1]} ${words[i + 2]} ${words[i + 3]}`);
+            }
+
+            // Specific keywords for series
+            if (lowerCaseName.includes('demon school')) keywords.add('demon school');
+            if (lowerCaseName.includes('seven deadly sins')) keywords.add('sins');
+            if (lowerCaseName.includes('case study')) keywords.add('case study');
+            if (lowerCaseName.includes('black butler')) keywords.add('black butler');
+            if (lowerCaseName.includes('danganronpa v3')) keywords.add('v3');
+            if (lowerCaseName.includes('toilet-bound')) keywords.add('toilet bound');
+            if (lowerCaseName.includes('toilet bound hanako-kun')) keywords.add('hanako kun');
+            if (lowerCaseName.includes('my hero academia')) keywords.add('my hero');
+            if (lowerCaseName.includes('your turn to die')) {
+                keywords.add('your turn');
+                keywords.add('turn to die');
+                keywords.add('ytd');
+            }
+            if (lowerCaseName.includes('oregairu')) {
+                keywords.add('romantic comedy');
+            }
+            if (lowerCaseName.includes('neon genesis evangelion')) {
+                keywords.add('evangelion');
+            }
+
+
+            return Array.from(keywords);
+        }
+
+        // --- Builds `knownSeriesData` from unique series currently in `characters` array ---
+        function buildKnownSeriesData() {
+            const uniqueSeriesNames = [...new Set(characters.map(char => char.series))];
+
+            // Only create knownSeriesData for series that are actually present in the characters array
+            knownSeriesData = uniqueSeriesNames.map(seriesName => ({
+                original: seriesName,
+                lower: seriesName.toLowerCase(),
+                keywords: generateKeywords(seriesName)
+            }));
+        }
+
+        // --- Main Tab Management Function ---
+        function showTab(tabId) {
+            const tabs = ['characterGrid', 'addForm', 'zodiacDisplay', 'mbtiDisplay', 'enneagramDisplay'];
+
+            if (tabId === currentActiveTab) {
+                // If the clicked tab is already active, close it and go to character grid
+                document.getElementById(currentActiveTab).classList.remove('active');
+                document.getElementById(currentActiveTab).style.display = 'none';
+                currentActiveTab = 'characterGrid'; // Set current to default
+                document.getElementById('characterGrid').classList.add('active');
+                document.getElementById('characterGrid').style.display = 'grid';
+                filteredCharacters = [...characters]; // Reset filter
+                renderCharacters(); // Re-render main grid
+                document.querySelector('.search-box').value = '';
+                document.getElementById('searchInfo').classList.remove('show');
+            } else {
+                // Hide current active tab (if any)
+                if (currentActiveTab && document.getElementById(currentActiveTab)) {
+                    document.getElementById(currentActiveTab).classList.remove('active');
+                    document.getElementById(currentActiveTab).style.display = 'none';
+                }
+
+                const targetTab = document.getElementById(tabId);
+                if (targetTab) {
+                    if (tabId === 'characterGrid') {
+                        targetTab.style.display = 'grid';
+                        filteredCharacters = [...characters];
+                        renderCharacters();
+                        document.querySelector('.search-box').value = '';
+                        document.getElementById('searchInfo').classList.remove('show');
+                    } else if (tabId === 'addForm') {
+                        targetTab.style.display = 'block';
+                        document.getElementById('charName').focus();
+                    } else {
+                        targetTab.style.display = 'block';
+                        // Render specific tab content
+                        if (tabId === 'zodiacDisplay') {
+                            renderZodiacs();
+                            addTooltipListeners();
+                        }
+                        else if (tabId === 'mbtiDisplay') renderMbti();
+                        else if (tabId === 'enneagramDisplay') renderEnneagram();
+
+                        seriesSuggestions.style.display = 'none';
+                        seriesSuggestions.innerHTML = '';
+                        document.getElementById('charSeries').value = '';
+                        document.querySelector('.search-box').value = '';
+                        document.getElementById('searchInfo').classList.remove('show');
+                    }
+                    targetTab.classList.add('active');
+                    currentActiveTab = tabId; // Update active tab
+                }
+            }
+
+            // Update active state of tab buttons
+            document.querySelectorAll('.tab-buttons .btn').forEach(button => {
+                const buttonOnClickId = button.onclick.toString().match(/showTab\('(.*?)'\)/);
+                if (buttonOnClickId && buttonOnClickId[1] === currentActiveTab) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+
+            // Ensure 'Add New Character' button state is correct
+            const addCharButton = document.querySelector('.controls .btn-primary');
+            if (currentActiveTab === 'addForm') {
+                addCharButton.classList.add('active');
+            } else {
+                addCharButton.classList.remove('active');
+            }
+        }
+
+
+        // --- Series Suggestion Logic (Smart Fix Implemented) ---
+        function showSeriesSuggestions(inputVal) {
+            const query = inputVal.toLowerCase().trim();
+            seriesSuggestions.innerHTML = '';
+
+            if (query.length === 0) {
+                seriesSuggestions.style.display = 'none';
+                return;
+            }
+
+            let suggestions = [];
+            const uniqueSuggestions = new Set();
+
+            // Filter allPossibleSeriesAliases based on unique series names present in characters array
+            const uniqueSeriesNamesInCharacters = [...new Set(characters.map(char => char.series))];
+            const currentRelevantAliases = {};
+            for (const alias in allPossibleSeriesAliases) {
+                if (uniqueSeriesNamesInCharacters.includes(allPossibleSeriesAliases[alias])) {
+                    currentRelevantAliases[alias] = allPossibleSeriesAliases[alias];
+                }
+            }
+
+            // 1. Check direct aliases (highest priority)
+            for (const alias in currentRelevantAliases) {
+                if (query.startsWith(alias) || alias.startsWith(query)) {
+                    const fullSeriesName = currentRelevantAliases[alias];
+                    const seriesDataObj = knownSeriesData.find(s => s.original === fullSeriesName);
+                    if (seriesDataObj && !uniqueSuggestions.has(seriesDataObj.original)) {
+                        suggestions.push({ seriesData: seriesDataObj, score: -2 });
+                        uniqueSuggestions.add(seriesDataObj.original);
+                    }
+                }
+            }
+
+            // 2. Prioritize exact substring matches (case-insensitive) from knownSeriesData
+            knownSeriesData.forEach(seriesDataObj => {
+                if (seriesDataObj.lower.includes(query) && !uniqueSuggestions.has(seriesDataObj.original)) {
+                    suggestions.push({ seriesData: seriesDataObj, score: 0 });
+                    uniqueSuggestions.add(seriesDataObj.original);
+                }
+            });
+
+            // 3. Keyword matches from knownSeriesData
+            knownSeriesData.forEach(seriesDataObj => {
+                seriesDataObj.keywords.forEach(keyword => {
+                    if (keyword.includes(query) && !uniqueSuggestions.has(seriesDataObj.original)) {
+                        suggestions.push({ seriesData: seriesDataObj, score: 1 });
+                        uniqueSuggestions.add(seriesDataObj.original);
+                    }
+                });
+            });
+
+            // 4. Fuzzy matching (Levenshtein distance) from knownSeriesData
+            if (suggestions.length < 5 || (suggestions.length > 0 && suggestions[0].score > 1)) {
+                 knownSeriesData.forEach(seriesDataObj => {
+                    if (!uniqueSuggestions.has(seriesDataObj.original)) {
+                        const dist = levenshteinDistance(query, seriesDataObj.lower);
+                        const normalizedDist = dist / Math.max(query.length, seriesDataObj.lower.length);
+
+                        if (normalizedDist < 0.35) {
+                            suggestions.push({ seriesData: seriesDataObj, score: normalizedDist + 2 });
+                            uniqueSuggestions.add(seriesDataObj.original);
+                        }
+                    }
+                });
+            }
+
+            suggestions.sort((a, b) => a.score - b.score);
+
+            const maxSuggestions = 7;
+            const displaySuggestions = suggestions.slice(0, maxSuggestions);
+
+            // Auto-complete when there's a clear unique match (and query is long enough)
+            if (displaySuggestions.length === 1 && query.length >= 2) {
+                const matchedSeriesData = displaySuggestions[0].seriesData;
+                const matchedSeriesLower = matchedSeriesData.lower;
+
+                if (matchedSeriesLower.startsWith(query) ||
+                    displaySuggestions[0].score <= 0 ||
+                    (displaySuggestions[0].score === 1 && matchedSeriesData.keywords.some(k => k.includes(query))) ||
+                    (levenshteinDistance(query, matchedSeriesLower) <= 1 && query.length >= 3)
+                ) {
+                    seriesInput.value = matchedSeriesData.original;
+                    seriesSuggestions.style.display = 'none';
+                    seriesSuggestions.innerHTML = '';
+                    return;
+                }
+            }
+
+            if (displaySuggestions.length > 0) {
+                displaySuggestions.forEach(item => {
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.classList.add('suggestion-item');
+                    suggestionDiv.textContent = item.seriesData.original;
+
+                    suggestionDiv.addEventListener('click', () => {
+                        seriesInput.value = item.seriesData.original;
+                        seriesSuggestions.style.display = 'none';
+                        seriesSuggestions.innerHTML = '';
+                    });
+                    seriesSuggestions.appendChild(suggestionDiv);
+                });
+                seriesSuggestions.style.display = 'block';
+            } else {
+                seriesSuggestions.style.display = 'none';
+            }
+        }
+
+
+        // --- Character Rendering and CRUD ---
+        function renderCharacters() {
+            const grid = document.getElementById('characterGrid');
+            grid.innerHTML = '';
+
+            filteredCharacters.forEach((character, index) => {
+                const actualIndex = characters.indexOf(character);
+                const card = document.createElement('div');
+                card.className = 'character-card';
+                card.draggable = true;
+                card.dataset.index = actualIndex;
+
+                // Determine Zodiac display for card (now handled by getZodiacSign for formatting)
+                let zodiacDisplayOnCard = '';
+                const currentZodiacDisplay = getZodiacSign(character.birthdate); // This returns "SignName", or "N/A"
+                if (currentZodiacDisplay && currentZodiacDisplay !== "N/A") {
+                    // Check if it's an inferred sign - apply 'inferred-card-badge' class
+                    // isZodiacInferred is from character object after normalization on load
+                    const isInferred = zodiacSigns.some(s => s.name === character.birthdate);
+                    const badgeClass = isInferred ? 'inferred-card-badge' : '';
+                    zodiacDisplayOnCard = `<div class="character-zodiac-badge ${badgeClass}">${currentZodiacDisplay}</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="character-rank">${actualIndex + 1}</div>
+                    ${character.mbti ? `<div class="character-mbti-badge">${character.mbti.toUpperCase()}</div>` : ''}
+                    ${zodiacDisplayOnCard}
+                    <div class="character-name">${character.name}</div>
+                    <div class="character-series">${character.series}</div>
+                    <div class="character-actions">
+                        <button class="btn btn-edit btn-small" onclick="editCharacter(${actualIndex})">Edit</button>
+                        <button class="btn btn-danger btn-small" onclick="removeCharacter(${actualIndex})">Remove</button>
+                    </div>
+                `;
+
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('drop', handleDrop);
+                card.addEventListener('dragenter', handleDragEnter);
+                card.addEventListener('dragleave', handleDragLeave);
+
+                grid.appendChild(card);
+            });
+
+            updateStats();
+        }
+
+        function addCharacter() {
+            const name = document.getElementById('charName').value.trim();
+            const series = document.getElementById('charSeries').value.trim();
+            const isWomanCheckbox = document.getElementById('charIsWoman');
+            const gender = isWomanCheckbox.checked ? "Female" : "Not Female";
+            const birthdateInput = document.getElementById('charBirthdate').value.trim();
+            const mbti = document.getElementById('charMBTI').value.trim();
+            const enneagram = document.getElementById('charEnneagram').value.trim();
+
+            // Normalize birthdate input for storage (to N/A or actual sign/date)
+            let processedBirthdate = '';
+            const normalizedBirthdateInput = birthdateInput.toLowerCase().replace(/[\s\.\/-]/g, '');
+            if (['na', 'n/a', 'n.a.'].includes(normalizedBirthdateInput)) {
+                processedBirthdate = 'N/A';
+            } else if (zodiacSigns.some(s => s.name.toLowerCase() === birthdateInput.toLowerCase())) {
+                 processedBirthdate = birthdateInput; // Store sign name directly for inferred
+            } else if (birthdateInput.match(/^\d{2}\/\d{2}$/)) { // Check for DD/MM format
+                processedBirthdate = birthdateInput;
+            } else if (birthdateInput !== '') {
+                processedBirthdate = 'N/A';
+                alert("Invalid Birthdate format or unrecognized sign. Stored as N/A.");
+            }
+
+
+            if (name && series) {
+                characters.push({name, series, gender, birthdate: processedBirthdate, mbti, enneagram});
+                document.getElementById('charName').value = '';
+                document.getElementById('charSeries').value = '';
+                isWomanCheckbox.checked = false;
+                document.getElementById('charBirthdate').value = '';
+                document.getElementById('charMBTI').value = '';
+                document.getElementById('charEnneagram').value = '';
+
+                showTab('characterGrid');
+                filteredCharacters = [...characters];
+                renderCharacters();
+                updateLastUpdated();
+                buildKnownSeriesData();
+            } else {
+                alert('Please fill in character name and series!');
+            }
+        }
+
+        function removeCharacter(index) {
+            if (confirm(`Are you sure you want to remove ${characters[index].name}?`)) {
+                characters.splice(index, 1);
+                filteredCharacters = [...characters];
+                renderCharacters();
+                updateLastUpdated();
+                buildKnownSeriesData();
+            }
+        }
+
+        function editCharacter(index) {
+            const character = characters[index];
+
+            const newName = prompt('Edit character name:', character.name);
+            if (newName === null) return;
+
+            const newSeries = prompt('Edit series:', character.series);
+            if (newSeries === null) return;
+
+            const isWomanPrompt = prompt('Woman? (y/n):', character.gender === "Female" ? "y" : "n");
+            if (isWomanPrompt === null) return;
+            const newGender = (isWomanPrompt.toLowerCase() === 'y' || isWomanPrompt.toLowerCase() === 'yes') ? "Female" : "Not Female";
+
+            const newBirthdateInput = prompt('Edit Birthdate:\nDD/MM, Inferred Sign, or NA', character.birthdate);
+            if (newBirthdateInput === null) return;
+
+            // Normalize edited birthdate input for storage
+            let processedEditedBirthdate = '';
+            const normalizedEditedBirthdateInput = newBirthdateInput.toLowerCase().replace(/[\s\.\/-]/g, '');
+            if (['na', 'n/a', 'n.a.'].includes(normalizedBirthdateInput)) {
+                processedEditedBirthdate = 'N/A';
+            } else if (zodiacSigns.some(s => s.name.toLowerCase() === newBirthdateInput.toLowerCase())) {
+                processedEditedBirthdate = newBirthdateInput;
+            } else if (newBirthdateInput.match(/^\d{2}\/\d{2}$/)) {
+                processedEditedBirthdate = newBirthdateInput;
+            } else if (newBirthdateInput !== '') {
+                processedEditedBirthdate = 'N/A';
+                alert("Invalid Birthdate format or unrecognized sign. Stored as N/A.");
+            }
+
+            const newMbti = prompt('Edit MBTI:', character.mbti);
+            if (newMbti === null) return;
+
+            const newEnneagram = prompt('Edit Enneagram:', character.enneagram);
+            if (newEnneagram === null) return;
+
+            characters[index] = {
+                name: newName.trim(),
+                series: newSeries.trim(),
+                gender: newGender,
+                birthdate: processedEditedBirthdate,
+                mbti: newMbti.trim(),
+                enneagram: newEnneagram.trim()
+            };
+
+            filteredCharacters = [...characters];
+            renderCharacters();
+            updateLastUpdated();
+            buildKnownSeriesData();
+        }
+
+        // --- Stats & Search ---
+        function updateStats() {
+            const totalCharactersCount = characters.length;
+            const uniqueSeriesSet = new Set(characters.map(char => char.series));
+            const differentSeriesCount = uniqueSeriesSet.size;
+            const femaleCharactersCount = characters.filter(char => char.gender === "Female").length;
+
+            document.getElementById('totalCount').textContent = totalCharactersCount;
+            document.getElementById('seriesCount').textContent = differentSeriesCount;
+            document.getElementById('womenCount').textContent = femaleCharactersCount;
+            document.getElementById('womenLabel').textContent = `This includes ${femaleCharactersCount} women!`;
+        }
+
+        function filterCharacters(searchTerm) {
+            const term = searchTerm.toLowerCase();
+            const searchInfo = document.getElementById('searchInfo');
+
+            if (term.trim() === '') {
+                filteredCharacters = [...characters];
+                searchInfo.classList.remove('show');
+            } else {
+                filteredCharacters = characters.filter(char =>
+                    char.name.toLowerCase().includes(term) ||
+                    char.series.toLowerCase().includes(term)
+                );
+
+                const count = filteredCharacters.length;
+                const seriesMatches = filteredCharacters.filter(char =>
+                    char.series.toLowerCase().includes(term)
+                );
+
+                let infoText = `${count} character${count !== 1 ? 's' : ''} found`;
+
+                const uniqueSeriesFromFilter = [...new Set(filteredCharacters.filter(char => char.series.toLowerCase().includes(term)).map(char => char.series))];
+                 if (uniqueSeriesFromFilter.length === 1 && seriesMatches.length > 1) {
+                     infoText = `${seriesMatches.length} characters from "${uniqueSeriesFromFilter[0]}"`;
+                 }
+
+                searchInfo.textContent = infoText;
+                searchInfo.classList.add('show');
+            }
+            renderCharacters();
+            if (currentActiveTab !== 'characterGrid') {
+                showTab('characterGrid');
+            }
+        }
+
+        function updateLastUpdated() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // --- Local Storage & Export ---
+        function saveList() {
+            const data = {
+                characters: characters,
+                lastUpdated: new Date().toISOString(),
+            };
+            localStorage.setItem('animeCharacterList', JSON.stringify(data));
+            showSavedMessage();
+            updateLastUpdated();
+        }
+
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('animeCharacterList');
+            if (savedData) {
+                try {
+                    const parsed = JSON.parse(savedData);
+                    if (Array.isArray(parsed.characters)) {
+                        characters = parsed.characters.map(char => {
+                            let genderValue = 'Not Female';
+                            if (char.gender === 'Female') {
+                                genderValue = 'Female';
+                            } else if (char.gender === 'Male' || char.gender === 'Non-binary') {
+                                genderValue = 'Not Female';
+                            }
+
+                            // Normalize birthdate on load for old data
+                            let processedBirthdate = char.birthdate || '';
+                            const normalizedBirthdateInput = String(processedBirthdate).toLowerCase().replace(/[\s\.\/-]/g, '');
+                            if (['', 'unknown', 'unknown zodiac'].includes(normalizedBirthdateInput)) {
+                                processedBirthdate = "N/A";
+                            }
+                            // If old data stored {DD/MM} (previous inferred format), extract it to normal sign or N/A
+                            const inferredBracketMatch = String(processedBirthdate).match(/\{(.*?)\}/);
+                            if (inferredBracketMatch) {
+                                const innerDateOrSign = inferredBracketMatch[1];
+                                const zodiacFromInner = getZodiacSignForNormalization(innerDateOrSign);
+                                if (zodiacFromInner !== "Unknown Zodiac") { // If valid sign
+                                    processedBirthdate = zodiacFromInner; // Store as raw sign name (new inferred format)
+                                } else {
+                                    processedBirthdate = "N/A"; // If invalid content inside brackets, revert to N/A
+                                }
+                            }
+                            // If it's a plain sign name from old data (e.g., "Aries") and not a date, it's inferred
+                            if (!processedBirthdate.match(/^\d{2}\/\d{2}$/) && processedBirthdate !== "N/A" && !zodiacSigns.some(s => s.name === processedBirthdate)) {
+                                // If it's not a DD/MM, not N/A, and not a known sign name (from old unrecognized string), convert to N/A
+                                processedBirthdate = "N/A";
+                            }
+
+
+                            return {
+                                name: char.name,
+                                series: char.series,
+                                gender: genderValue,
+                                birthdate: processedBirthdate,
+                                mbti: char.mbti || '',
+                                enneagram: char.enneagram || ''
+                            };
+                        });
+                        filteredCharacters = [...characters];
+                        renderCharacters();
+                        if (parsed.lastUpdated) {
+                            document.getElementById('lastUpdated').textContent =
+                                new Date(parsed.lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                        }
+                    }
+                } catch (e) {
+                    console.error('Failed to load saved list:', e);
+                }
+            }
+        }
+
+        function showSavedMessage() {
+            let message = document.getElementById('saveMessage');
+            if (!message) {
+                message = document.createElement('div');
+                message.id = 'saveMessage';
+                message.style.textAlign = 'center';
+                message.style.color = 'green';
+                message.style.marginTop = '10px';
+                message.style.fontWeight = 'bold';
+                document.querySelector('.controls').appendChild(message);
+            }
+            message.textContent = 'Saved!';
+            setTimeout(() => { message.textContent = ''; }, 2000);
+        }
+
+        function exportList() {
+            let markdown = '# My Favorite Anime Characters\n\n## Character List\n\n';
+            characters.forEach((char, index) => {
+                markdown += `${index + 1}. **${char.name}** (${char.series})\n`;
+                if (char.gender === "Female") markdown += `    - Woman: Yes\n`;
+                if (char.birthdate && char.birthdate !== 'N/A') {
+                    let birthdateValue = char.birthdate;
+                    if (zodiacSigns.some(s => s.name === char.birthdate)) {
+                        markdown += `    - Birthdate: Inferred: ${birthdateValue}\n`;
+                    } else {
+                        markdown += `    - Birthdate: ${birthdateValue}\n`;
+                    }
+                }
+                if (char.mbti) markdown += `    - MBTI: ${char.mbti.toUpperCase()}\n`;
+                if (char.enneagram) markdown += `    - Enneagram: ${char.enneagram.toLowerCase()}\n`;
+            });
+            markdown += `\n---\n\n*Last updated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}*\n\n`;
+            markdown += '## Notes\n- Feel free to add more characters, edit existing entries, or reorganize the list\n';
+            markdown += '- You can include character details, series information, or personal notes about why you like them';
+
+            const blob = new Blob([markdown], {type: 'text/markdown'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'anime_characters_list.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- New JSON Export/Import Functions ---
+        function exportDataJson() {
+            const dataToExport = JSON.stringify(characters, null, 2);
+            const blob = new Blob([dataToExport], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'anime_character_data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert('Your character data has been exported as anime_character_data.json!');
+        }
+
+        function importDataJson(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedChars = JSON.parse(e.target.result);
+                        if (Array.isArray(importedChars)) {
+                            characters = importedChars.map(char => {
+                                let genderValue = 'Not Female';
+                                if (char.gender === 'Female') {
+                                    genderValue = 'Female';
+                                } else if (char.gender === 'Male' || char.gender === 'Non-binary') {
+                                    genderValue = 'Not Female';
+                                }
+
+                                // Normalize birthdate on import from JSON for consistency
+                                let processedBirthdate = char.birthdate || '';
+                                const normalizedBirthdateInput = String(processedBirthdate).toLowerCase().replace(/[\s\.\/-]/g, '');
+                                if (['', 'unknown', 'unknown zodiac'].includes(normalizedBirthdateInput)) {
+                                    processedBirthdate = "N/A";
+                                }
+                                const inferredBracketMatch = String(processedBirthdate).match(/\{(.*?)\}/);
+                                if (inferredBracketMatch) {
+                                    const innerDateOrSign = inferredBracketMatch[1];
+                                    const zodiacFromInner = getZodiacSignForNormalization(innerDateOrSign);
+                                    if (zodiacFromInner !== "Unknown Zodiac") {
+                                        processedBirthdate = zodiacFromInner; // Store as raw sign name
+                                    } else {
+                                        processedBirthdate = "N/A";
+                                    }
+                                } else if (zodiacSigns.some(s => s.name === processedBirthdate)) {
+                                    // It's already a valid sign name, keep it as is (inferred)
+                                } else if (processedBirthdate !== 'N/A' && !processedBirthdate.match(/^\d{2}\/\d{2}$/)) {
+                                    // If it's not a valid date, N/A, or a sign name, treat as N/A
+                                    processedBirthdate = 'N/A';
+                                }
+
+                                return {
+                                    name: char.name,
+                                    series: char.series,
+                                    gender: genderValue,
+                                    birthdate: processedBirthdate,
+                                    mbti: char.mbti || '',
+                                    enneagram: char.enneagram || ''
+                                };
+                            });
+                            filteredCharacters = [...characters];
+                            renderCharacters();
+                            buildKnownSeriesData();
+                            alert('List imported successfully! Remember to save changes to local storage.');
+                        } else {
+                            alert('Error: Imported file does not contain a valid array of characters.');
+                        }
+                    } catch (error) {
+                        alert('Error importing file. Please make sure it\'s a valid JSON array.');
+                        console.error('Import error:', error);
+                    }
+                };
+                reader.readAsText(file);
+            }
+            event.target.value = '';
+        }
+
+        // --- Keyboard Shortcuts ---
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                showTab('addForm');
+            } else if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveList();
+            }
+        });
+
+        // --- Drag and Drop functionality ---
+        let draggedElement = null;
+        let draggedIndex = null;
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            draggedIndex = parseInt(this.dataset.index);
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.character-card').forEach(card => {
+                card.classList.remove('drag-over');
+            });
+            draggedElement = null;
+            draggedIndex = null;
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            if (this !== draggedElement) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            if (draggedElement !== this) {
+                const targetIndex = parseInt(this.dataset.index);
+
+                const draggedChar = characters[draggedIndex];
+                characters.splice(draggedIndex, 1);
+
+                if (targetIndex > draggedIndex) {
+                    characters.splice(targetIndex - 1, 0, draggedChar);
+                } else {
+                    characters.splice(targetIndex, 0, draggedChar);
+                }
+
+                const searchBox = document.querySelector('.search-box');
+                if (searchBox.value.trim() === '') {
+                    filteredCharacters = [...characters];
+                }
+
+                renderCharacters();
+                updateLastUpdated();
+                buildKnownSeriesData();
+            }
+
+            return false;
+        }
+
+        // --- Zodiac Logic and Rendering ---
+        const zodiacSigns = [
+            { name: "Capricorn", dates: ["22/12", "19/01"] },
+            { name: "Aquarius", dates: ["20/01", "18/02"] },
+            { name: "Pisces", dates: ["19/02", "20/03"] },
+            { name: "Aries", dates: ["21/03", "19/04"] },
+            { name: "Taurus", dates: ["20/04", "20/05"] },
+            { name: "Gemini", dates: ["21/05", "20/06"] },
+            { name: "Cancer", dates: ["21/06", "22/07"] },
+            { name: "Leo", dates: ["23/07", "22/08"] },
+            { name: "Virgo", dates: ["23/08", "22/09"] },
+            { name: "Libra", dates: ["23/09", "22/10"] },
+            { name: "Scorpio", dates: ["23/10", "21/11"] },
+            { name: "Sagittarius", dates: ["22/11", "21/12"] }
+        ];
+
+        // Helper function for internal date parsing, returns plain sign name or "Unknown Zodiac"
+        function getZodiacSignForNormalization(birthdateStr) {
+            if (!birthdateStr) return "Unknown Zodiac";
+            const [dayStr, monthStr] = birthdateStr.split('/');
+            const day = parseInt(dayStr, 10);
+            const month = parseInt(monthStr, 10);
+
+            if (isNaN(day) || isNaN(month) || day < 1 || day > 31 || month < 1 || month > 12) {
+                return "Unknown Zodiac";
+            }
+
+            for (const sign of zodiacSigns) {
+                const [startDay, startMonth] = sign.dates[0].split('/').map(Number);
+                const [endDay, endMonth] = sign.dates[1].split('/').map(Number);
+
+                if (startMonth === endMonth) {
+                    if (month === startMonth && day >= startDay && day <= endDay) {
+                        return sign.name;
+                    }
+                } else {
+                    if ((month === startMonth && day >= startDay) || (month === endMonth && day <= endDay)) {
+                        return sign.name;
+                    }
+                    // Handle wrap-around for Capricorn (Dec-Jan)
+                    if (sign.name === "Capricorn" && ((month === 12 && day >= 22) || (month === 1 && day <= 19))) {
+                        return sign.name;
+                    }
+                }
+            }
+            return "Unknown Zodiac";
+        }
+
+        // Helper for month number to abbreviation
+        const monthAbbreviations = [
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+        // Main function to get Zodiac sign for display (handles NA, DD/MM, and Inferred Sign)
+        function getZodiacSign(birthdateStr) {
+            if (!birthdateStr || birthdateStr.toUpperCase() === 'N/A') return "N/A";
+
+            // Check if it's a raw Zodiac Sign name (e.g., "Taurus") - this implies inferred
+            const normalizedSignInput = birthdateStr.toLowerCase();
+            const foundZodiacSign = zodiacSigns.find(s => s.name.toLowerCase() === normalizedSignInput);
+            if (foundZodiacSign) {
+                return foundZodiacSign.name; // Return plain name for display on badge (quotes added in HTML)
+            }
+
+            // If it's a DD/MM date
+            const dateMatch = birthdateStr.match(/^(\d{2})\/(\d{2})$/);
+            if (dateMatch) {
+                const day = parseInt(dateMatch[1], 10);
+                const month = parseInt(dateMatch[2], 10);
+                const sign = getZodiacSignForNormalization(`${day}/${month}`);
+                if (sign !== "Unknown Zodiac") {
+                    return sign; // Return plain sign name for DD/MM dates
+                } else {
+                    return "N/A"; // If date format is invalid, treat as N/A
+                }
+            }
+
+            return "N/A"; // Catch-all for unparseable strings that aren't N/A or signs
+        }
+
+        function renderZodiacs() {
+            const zodiacDisplay = document.getElementById('zodiacDisplay');
+            let groupedZodiacs = {};
+            // Initialize all actual zodiacs
+            zodiacSigns.forEach(sign => groupedZodiacs[sign.name] = []);
+            // Special N/A category
+            groupedZodiacs["N/A"] = [];
+
+            characters.forEach(char => {
+                const birthdate = char.birthdate || 'N/A'; // Default to N/A if missing
+                let displaySignName = 'N/A'; // For grouping
+                let isZodiacInferred = false;
+
+                const normalizedBirthdateInput = String(birthdate).toLowerCase();
+
+                if (normalizedBirthdateInput === 'n/a') {
+                    displaySignName = 'N/A';
+                } else if (zodiacSigns.some(s => s.name.toLowerCase() === normalizedBirthdateInput)) { // If birthdate is a sign name (inferred)
+                    displaySignName = zodiacSigns.find(s => s.name.toLowerCase() === normalizedBirthdateInput).name;
+                    isZodiacInferred = true;
+                } else { // Assume DD/MM format for direct calculation
+                    const dateMatch = String(birthdate).match(/^(\d{2})\/(\d{2})$/);
+                    if (dateMatch) {
+                        const day = parseInt(dateMatch[1], 10);
+                        const month = parseInt(dateMatch[2], 10);
+                        const calculatedSign = getZodiacSignForNormalization(`${day}/${month}`);
+                        if (calculatedSign !== "Unknown Zodiac") {
+                            displaySignName = calculatedSign;
+                        } else {
+                            displaySignName = 'N/A'; // Unparseable DD/MM also goes to N/A
+                        }
+                    } else {
+                         displaySignName = 'N/A'; // Unparseable string also goes to N/A
+                    }
+                }
+
+                if (!groupedZodiacs[displaySignName]) {
+                    groupedZodiacs[displaySignName] = [];
+                }
+
+                const charWithInferred = { ...char, isZodiacInferred: isZodiacInferred }; // Pass inferred flag
+                groupedZodiacs[displaySignName].push(charWithInferred);
+            });
+
+            // Sort categories: actual signs by count then alpha, then N/A last
+            const sortedZodiacTypes = Object.keys(groupedZodiacs)
+                .filter(type => type !== "N/A")
+                .sort((a, b) => {
+                    const countA = groupedZodiacs[a].length;
+                    const countB = groupedZodiacs[b].length;
+                    if (countA !== countB) {
+                        return countB - countA;
+                    }
+                    return a.localeCompare(b);
+                });
+            if (groupedZodiacs["N/A"].length > 0) {
+                sortedZodiacTypes.push("N/A");
+            }
+
+            let html = `<h3>Characters by Zodiac Sign</h3>`; // No top button here
+            sortedZodiacTypes.forEach(sign => {
+                if (groupedZodiacs[sign].length > 0) {
+                    // Apply gray text for N/A group
+                    const isNaGroup = (sign === "N/A");
+                    const groupTextColorClass = isNaGroup ? 'n-a-item' : '';
+
+                    html += `<div class="tab-group"><h4>${sign} (${groupedZodiacs[sign].length})</h4><ul>`;
+                    groupedZodiacs[sign].sort((a,b) => a.name.localeCompare(b.name)).forEach(char => {
+                        let birthdateContent = '';
+                        let isInferredElement = false;
+
+                        if (char.birthdate && char.birthdate !== 'N/A') {
+                            const dateMatch = char.birthdate.match(/^(\d{2})\/(\d{2})$/);
+                            if (dateMatch) {
+                                const day = parseInt(dateMatch[1], 10);
+                                const month = parseInt(dateMatch[2], 10);
+                                birthdateContent = `${day} ${monthAbbreviations[month - 1]}`;
+                            } else if (char.isZodiacInferred) { // If it's an inferred sign from our logic
+                                isInferredElement = true;
+                                // For inferred, the content in the list item is "(Inf)" but it's the *container's* color that signifies it's inferred
+                                birthdateContent = `<span class="inferred-info-trigger" data-tooltip-text="O personagem é um ser sobrenatural ou não tem data de nascimento nos primeiros 3 resultados do Google, mas o criador gosta dele e lhe deu um signo tirado de Lindóia">(Inf)</span>`;
+                            }
+                        }
+
+                        // Birthdate/Inferred Container is always present for consistent spacing
+                        // Apply 'empty-container' class if no content to allow styling for alignment
+                        const birthdateContainerHTML = `<span class="char-birthdate-display ${isInferredElement ? 'inferred-container' : (birthdateContent ? '' : 'empty-container')}">${birthdateContent}</span>`;
+
+                        html += `<li class="${groupTextColorClass}">
+                                    ${birthdateContainerHTML}
+                                    <span class="char-name-series">
+                                        <strong>${char.name}</strong> (${char.series})
+                                    </span>
+                                
+                                </li>`;
+                    });
+                    html += `</ul></div>`;
+                }
+            });
+            zodiacDisplay.innerHTML = html + `<button class="btn btn-back" onclick="showTab('characterGrid')">Back to List</button>`;
+        }
+
+
+        // --- MBTI Logic and Rendering ---
+        function renderMbti() {
+            const mbtiDisplay = document.getElementById('mbtiDisplay');
+            let groupedMbti = {};
+            groupedMbti["Unknown MBTI"] = [];
+
+            characters.forEach(char => {
+                const mbti = char.mbti ? char.mbti.toUpperCase().trim() : "Unknown MBTI";
+                if (!groupedMbti[mbti]) {
+                    groupedMbti[mbti] = [];
+                }
+                groupedMbti[mbti].push(char);
+            });
+
+            const sortedMbtiTypes = Object.keys(groupedMbti)
+                .filter(type => type !== "Unknown MBTI")
+                .sort((a, b) => {
+                    const countA = groupedMbti[a].length;
+                    const countB = groupedMbti[b].length;
+                    if (countA !== countB) {
+                        return countB - countA;
+                    }
+                    return a.localeCompare(b);
+                });
+            // Add Unknown MBTI to the end if present
+            if (groupedMbti["Unknown MBTI"].length > 0) {
+                sortedMbtiTypes.push("Unknown MBTI");
+            }
+
+            let html = `<h3>Characters by MBTI Type</h3>`; // No top button here
+            sortedMbtiTypes.forEach(type => {
+                if (groupedMbti[type].length > 0) {
+                    // Apply gray text for Unknown MBTI group
+                    const isUnknownGroup = (type === "Unknown MBTI");
+                    const groupTextColorClass = isUnknownGroup ? 'n-a-item' : '';
+
+                    html += `<div class="tab-group"><h4>${type} (${groupedMbti[type].length})</h4><ul>`;
+                    groupedMbti[type].sort((a,b) => a.name.localeCompare(b.name)).forEach(char => {
+                        html += `<li class="${groupTextColorClass}"><strong>${char.name}</strong> (${char.series})</li>`;
+                    });
+                    html += `</ul></div>`;
+                }
+            });
+            mbtiDisplay.innerHTML = html + `<button class="btn btn-back" onclick="showTab('characterGrid')">Back to List</button>`;
+        }
+
+        // --- New Enneagram Logic and Rendering ---
+        function renderEnneagram() {
+            const enneagramDisplay = document.getElementById('enneagramDisplay');
+            let groupedEnneagram = {};
+            groupedEnneagram["Unknown Enneagram"] = [];
+
+            characters.forEach(char => {
+                const enneagram = char.enneagram ? char.enneagram.toLowerCase().trim() : "Unknown Enneagram";
+                if (!groupedEnneagram[enneagram]) {
+                    groupedEnneagram[enneagram] = [];
+                }
+                groupedEnneagram[enneagram].push(char);
+            });
+
+            const sortedEnneagramTypes = Object.keys(groupedEnneagram)
+                .filter(type => type !== "Unknown Enneagram")
+                .sort((a, b) => {
+                    const countA = groupedEnneagram[a].length;
+                    const countB = groupedEnneagram[b].length;
+                    if (countA !== countB) {
+                        return countB - countA;
+                    }
+                    return a.localeCompare(b);
+                });
+            // Add Unknown Enneagram to the end if present
+            if (groupedEnneagram["Unknown Enneagram"].length > 0) {
+                sortedEnneagramTypes.push("Unknown Enneagram");
+            }
+
+            let html = `<h3>Characters by Enneagram Type</h3>`; // No top button here
+            sortedEnneagramTypes.forEach(type => {
+                if (groupedEnneagram[type].length > 0) {
+                    // Apply gray text for Unknown Enneagram group
+                    const isUnknownGroup = (type === "Unknown Enneagram");
+                    const groupTextColorClass = isUnknownGroup ? 'n-a-item' : '';
+
+                    html += `<div class="tab-group"><h4>${type} (${groupedEnneagram[type].length})</h4><ul>`;
+                    groupedEnneagram[type].sort((a,b) => a.name.localeCompare(b.name)).forEach(char => {
+                        html += `<li class="${groupTextColorClass}"><strong>${char.name}</strong> (${char.series})</li>`;
+                    });
+                    html += `</ul></div>`;
+                }
+            });
+            enneagramDisplay.innerHTML = html + `<button class="btn btn-back" onclick="showTab('characterGrid')">Back to List</button>`;
+        }
+
+
+        // --- New Tooltip Logic ---
+        let activeTooltip = null;
+
+        function showCustomTooltip(triggerElement, text) {
+            // Remove any currently active tooltip
+            if (activeTooltip) {
+                activeTooltip.remove();
+                activeTooltip = null;
+            }
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'custom-tooltip';
+            tooltip.textContent = text;
+            document.body.appendChild(tooltip); // Append to body to avoid clipping issues
+
+            // Position the tooltip (speech bubble above the trigger)
+            const triggerRect = triggerElement.getBoundingClientRect();
+
+            // Calculate left position to center the tooltip over the trigger
+            let tooltipLeft = triggerRect.left + (triggerRect.width / 2) - (tooltip.offsetWidth / 2);
+            // Ensure tooltip doesn't go off screen to the left
+            if (tooltipLeft < 10) { // 10px padding from left edge
+                tooltipLeft = 10;
+            }
+            // Ensure tooltip doesn't go off screen to the right
+            if (tooltipLeft + tooltip.offsetWidth > window.innerWidth - 10) { // 10px padding from right edge
+                tooltipLeft = window.innerWidth - tooltip.offsetWidth - 10;
+            }
+
+            // Calculate top position (above the trigger, accounting for arrow height)
+            let tooltipTop = triggerRect.top - tooltip.offsetHeight - 15; // 15px for arrow and some spacing
+            // If it goes above the top of the screen, reposition it below
+            if (tooltipTop < 0) {
+                tooltipTop = triggerRect.bottom + 15; // Position below the trigger
+                // Adjust arrow direction for bottom positioning
+                tooltip.style.setProperty('--tooltip-arrow-bottom', 'auto');
+                tooltip.style.setProperty('--tooltip-arrow-top', '-10px');
+                tooltip.style.setProperty('--tooltip-arrow-transform', 'translateX(-50%)'); // No rotation
+                tooltip.style.setProperty('--tooltip-arrow-border-color', '#333 transparent transparent transparent');
+            } else {
+                // Reset for top positioning (default)
+                tooltip.style.setProperty('--tooltip-arrow-bottom', '-10px');
+                tooltip.style.setProperty('--tooltip-arrow-top', 'auto');
+                tooltip.style.setProperty('--tooltip-arrow-transform', 'translateX(-50%) rotate(180deg)');
+                tooltip.style.setProperty('--tooltip-arrow-border-color', '#333 transparent transparent transparent');
+            }
+
+            tooltip.style.left = `${tooltipLeft}px`;
+            tooltip.style.top = `${tooltipTop}px`;
+
+            tooltip.classList.add('active');
+            activeTooltip = tooltip;
+        }
+
+        // Global click listener to close tooltip
+        document.addEventListener('click', (event) => {
+            if (activeTooltip && !activeTooltip.contains(event.target)) {
+                // Check if the click was on the trigger itself, if so, don't close immediately
+                const isTriggerClick = event.target.classList.contains('inferred-info-trigger');
+                if (!isTriggerClick) {
+                    activeTooltip.remove();
+                    activeTooltip = null;
+                }
+            }
+        });
+
+        // Add event listeners to the triggers when the zodiacs are rendered
+        function addTooltipListeners() {
+            document.querySelectorAll('.inferred-info-trigger').forEach(trigger => {
+                // Use mouseenter and mouseleave for hover effect
+                let leaveTimeout;
+                trigger.addEventListener('mouseenter', () => {
+                    clearTimeout(leaveTimeout); // Clear any pending hide
+                    const text = trigger.dataset.tooltipText;
+                    showCustomTooltip(trigger, text);
+                });
+
+                trigger.addEventListener('mouseleave', () => {
+                    // Give a small delay before hiding, in case user quickly re-enters or moves to tooltip
+                    leaveTimeout = setTimeout(() => {
+                        if (activeTooltip) {
+                            activeTooltip.remove();
+                            activeTooltip = null;
+                        }
+                    }, 100); // Small delay
+                });
+
+                // Also add a click listener to the trigger to explicitly show/hide
+                trigger.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent the global click listener from closing it immediately
+                    if (activeTooltip && activeTooltip.parentNode) { // Check if tooltip exists and is in DOM
+                        if (activeTooltip.textContent === trigger.dataset.tooltipText) {
+                            // If clicking the same trigger and tooltip is already shown for it, hide it
+                            activeTooltip.remove();
+                            activeTooltip = null;
+                        } else {
+                            // If clicking a different trigger, show new tooltip
+                            const text = trigger.dataset.tooltipText;
+                            showCustomTooltip(trigger, text);
+                        }
+                    } else {
+                        // If no tooltip is active, show one
+                        const text = trigger.dataset.tooltipText;
+                        showCustomTooltip(trigger, text);
+                    }
+                });
+            });
+        }
+
+
+        // --- Initialize the application ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get references to elements once DOM is loaded
+            const seriesInput = document.getElementById('charSeries');
+            const seriesSuggestions = document.getElementById('seriesSuggestions');
+
+            loadFromLocalStorage();
+            buildKnownSeriesData();
+            renderCharacters();
+            showTab('characterGrid'); // Initialize with character grid active
+
+            // --- Event Listeners for Series Suggestions (Correctly placed inside DOMContentLoaded) ---
+            seriesInput.addEventListener('input', (event) => {
+                showSeriesSuggestions(event.target.value);
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!seriesInput.contains(event.target) && !seriesSuggestions.contains(event.target)) {
+                    seriesSuggestions.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
